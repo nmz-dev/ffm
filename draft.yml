@@ -1,0 +1,61 @@
+models:
+  # Existing Models have been included but possibly enhanced
+  Family:
+    name: string,nullable
+
+  User:
+    timestamps: true
+    family_id: id foreign:families.id
+    # pricing tier can be tracked
+    pricing_tier_id: id foreign:pricings.id nullable
+
+  IncomeSource:
+    user_id: id foreign:users.id
+    name: string
+    description: text nullable
+
+  ExpenseCategory:
+    user_id: id foreign:users.id
+    name: string
+    description: text nullable
+
+  Transaction:
+    user_id: id foreign:users.id
+    amount: decimal(10,2)
+    date: date
+    description: text nullable
+    type: json
+    category_id: id foreign:expense_categories.id nullable
+    source_id: id foreign:income_sources.id nullable
+
+  Budget:
+    user_id: id foreign:users.id
+    category_id: id foreign:expense_categories.id
+    amount: decimal(10,2)
+    period: json
+    start_date: date nullable
+    end_date: date nullable
+
+  # New Models
+  Membership:
+    family_id: id foreign:families.id
+    member_count: integer
+    status: enum:free,paid
+
+  Pricing:
+    name: string
+    description: text nullable
+    cost: decimal(10,2)
+
+  BillingReminder:
+    user_id: id foreign:users.id
+    due_date: date
+    amount: decimal(10,2)
+    sent: boolean default:false
+
+  SavingGoal:
+    user_id: id foreign:users.id
+    target_amount: decimal(10,2)
+    current_amount: decimal(10,2)
+    target_date: date
+    status: enum:ongoing,completed,canceled

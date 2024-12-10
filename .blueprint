@@ -1,0 +1,42 @@
+created:
+    - database/factories/FamilyFactory.php
+    - database/factories/UserFactory.php
+    - database/factories/IncomeSourceFactory.php
+    - database/factories/ExpenseCategoryFactory.php
+    - database/factories/TransactionFactory.php
+    - database/factories/BudgetFactory.php
+    - database/factories/MembershipFactory.php
+    - database/factories/PricingFactory.php
+    - database/factories/BillingReminderFactory.php
+    - database/factories/SavingGoalFactory.php
+    - database/migrations/2024_12_10_032601_create_families_table.php
+    - database/migrations/2024_12_10_032602_create_users_table.php
+    - database/migrations/2024_12_10_032603_create_income_sources_table.php
+    - database/migrations/2024_12_10_032604_create_expense_categories_table.php
+    - database/migrations/2024_12_10_032605_create_transactions_table.php
+    - database/migrations/2024_12_10_032606_create_budgets_table.php
+    - database/migrations/2024_12_10_032607_create_memberships_table.php
+    - database/migrations/2024_12_10_032608_create_pricings_table.php
+    - database/migrations/2024_12_10_032609_create_billing_reminders_table.php
+    - database/migrations/2024_12_10_032610_create_saving_goals_table.php
+    - app/Models/Family.php
+    - app/Models/User.php
+    - app/Models/IncomeSource.php
+    - app/Models/ExpenseCategory.php
+    - app/Models/Transaction.php
+    - app/Models/Budget.php
+    - app/Models/Membership.php
+    - app/Models/Pricing.php
+    - app/Models/BillingReminder.php
+    - app/Models/SavingGoal.php
+models:
+    Family: { name: string }
+    User: { timestamps: timestamps, family_id: 'id foreign:families.id', pricing_tier_id: 'id foreign:pricings.id nullable' }
+    IncomeSource: { user_id: 'id foreign:users.id', name: string, description: 'text nullable' }
+    ExpenseCategory: { user_id: 'id foreign:users.id', name: string, description: 'text nullable' }
+    Transaction: { user_id: 'id foreign:users.id', amount: 'decimal(10,2)', date: date, description: 'text nullable', type: 'enum:income,expense', category_id: 'id foreign:expense_categories.id nullable', source_id: 'id foreign:income_sources.id nullable' }
+    Budget: { user_id: 'id foreign:users.id', category_id: 'id foreign:expense_categories.id', amount: 'decimal(10,2)', period: 'enum:monthly,yearly nullable', start_date: 'date nullable', end_date: 'date nullable' }
+    Membership: { family_id: 'id foreign:families.id', member_count: integer, status: 'enum:free,paid' }
+    Pricing: { name: string, description: 'text nullable', cost: 'decimal(10,2)' }
+    BillingReminder: { user_id: 'id foreign:users.id', due_date: date, amount: 'decimal(10,2)', sent: 'boolean default:false' }
+    SavingGoal: { user_id: 'id foreign:users.id', target_amount: 'decimal(10,2)', current_amount: 'decimal(10,2)', target_date: date, status: 'enum:ongoing,completed,canceled' }
