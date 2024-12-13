@@ -2,37 +2,29 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BillingRemainderResource\Pages;
-use App\Filament\Resources\BillingRemainderResource\RelationManagers;
-use App\Models\BillingRemainder;
-use Filament\Forms;
+use App\Filament\Resources\BillingReminderResource\Pages;
+use App\Models\BillingReminder;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BillingRemainderResource extends Resource
+class BillingReminderResource extends Resource
 {
-    protected static ?string $model = BillingRemainder::class;
+    protected static ?string $model = BillingReminder::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark-square';
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                //
-            ]);
+            ->schema(BillingReminder::getForm());
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                //
-            ])
+            ->columns(BillingReminder::getColumns())
             ->filters([
                 //
             ])
@@ -56,9 +48,11 @@ class BillingRemainderResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBillingRemainders::route('/'),
-            'create' => Pages\CreateBillingRemainder::route('/create'),
-            'edit' => Pages\EditBillingRemainder::route('/{record}/edit'),
+            'index' => Pages\ListBillingReminders::route('/'),
+            'create' => Pages\CreateBillingReminder::route('/create'),
+            'edit' => Pages\EditBillingReminder::route('/{record}/edit'),
         ];
     }
+
+
 }

@@ -6,6 +6,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Family extends Model
 {
@@ -28,6 +29,10 @@ class Family extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    public function user():belongsTo{
+        return $this->belongsTo(User::class);
+    }
     /**
      * @return array
      */
@@ -50,5 +55,4 @@ class Family extends Model
             TextInput::make('name')
         ];
     }
-
 }

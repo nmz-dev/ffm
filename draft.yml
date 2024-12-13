@@ -34,7 +34,7 @@ models:
     amount: decimal(10,2)
     period: json
     start_date: date nullable
-    end_date: date nullable
+    end_date: date nullableåå
 
   # New Models
   Membership:
@@ -51,7 +51,7 @@ models:
     user_id: id foreign:users.id
     due_date: date
     amount: decimal(10,2)
-    sent: boolean default:false
+    sent: enum:pending,paid
 
   SavingGoal:
     user_id: id foreign:users.id

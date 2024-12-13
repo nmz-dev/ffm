@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->date('due_date');
             $table->string('amount');
-            $table->boolean('sent')->default(false);
+            $table->enum('sent',['paid','pending']);
             $table->timestamps();
         });
 
